@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log in Page</title>
+<style>
+form {
+  border: 3px solid #f1f1f1;
+  background-color: d9d9d9;
+  margin: 20px 500px 20px 500px
+}
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+button {
+  background-color: #4CAF50;
+  border: none;
+  width: 100%;
+  margin: 8px 0;
+  padding: 14px 20px;
+  color: white;
+}
+button:hover {
+  opacity:0.8;
+  background-color: #006600;
+}
+.imgcontainer{
+  text-align: center;
+  margin: 24px 0 12px 0;
+
+}
+img.image{
+  width: 30%;
+  border-radius: 50%;
+}
+.container {
+  padding: 16px;
+}
+
+
+h2{
+  text-align:center;
+}
+
+.alert {
+  padding: 20px;
+  background-color: #f44336; 
+  color: white;
+  margin-bottom: 25px;
+}
+
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+
+.closebtn:hover {
+  color: black;
+} 
+</style>
+</head>
+<body>
+      <div class="d-flex justify-content-center">
+      
+       <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <b>THE ENTERED CREDENTIALS ARE WRONG. PLEASE TRY AGAIN!!</b>
+        </div> 
+      <h2> Login </h2>
+      </div>
+      <form class="form-signin" action = "/login" method="post">
+      {% csrf_token %}
+        {% comment %} <div class="imgcontainer">
+          <img src="/static/avtar.webp" alt="Image" class="image">
+        </div> {% endcomment %}
+
+        <div class="container">
+        <div>
+          <label for="username" class="sr-only"> Username </label>
+          <input type="text" id="username" name="username" class="form-control" placeholder="Enter your Username" required>
+        </div>
+        <div>
+          <label for="pswrd" class="sr-only"> Password </label>
+          <input type="password" id="pswrd" name="pswrd" class="form-control" placeholder="Enter the Password" required>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Log In</button>
+        </div>
+        </div>
+      </form>
+       <div>
+      Don't have an account? Register here.. <br>
+      <a href="/register">Register</a>
+      </div>
+
+</body>
+</html>
