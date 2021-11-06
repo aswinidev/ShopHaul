@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Shopline{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1 class="display-4">Vocal For Local!</h1>
+                <p class="lead">The Modern e-commerce For Small-Scale Businesses</p>
+                <hr class="my-4">
+                <div class="row mb-4 ml-1 text-center">
+                    {% if request.user.is_authenticated %}
+                    <a href="" class="ml-2 btn btn-primary">Proceed to Dashboard</a>
+                    {% else %}
+                    <a href="{% url 'register' %}" class="btn btn-warning">Register As Seller</a>
+                    <a href="{% url 'login' %}" class="ml-2 btn btn-primary">Login</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-sm-6 text-center">
+                <img class="img-fluid" style="max-height: 250px;" src="{% static "images/index_jumbotron.png" %}"
+                    alt="My image">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

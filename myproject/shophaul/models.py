@@ -1,13 +1,22 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator
+from django.shortcuts import reverse
 
-# Create your models here.
-class UserRegistration(models.Model):
-    seller_id=models.AutoField(primary_key=True)
-    username=models.CharField(max_length=20)
-    Fname=models.CharField(max_length=20)
-    Lname=models.CharField(max_length=20)
-    address=models.CharField(max_length=200)
-    contact_no=models.IntegerField(max_length=12)
-    pswrd=models.CharField(max_length=20)
+
+class Seller(models.Model):
+    name = models.CharField(default='My Shop', max_length=30)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, primary_key=True)
+
     class Meta:
-        db_table = "Seller_info"
+        verbose_name = ("Seller")
+        verbose_name_plural = ("Sellers")
+        ordering = ['name']
+        db_table = 'seller'
+
+    def __str__(self):
+        return self.user
+
+    def get_absolute_url(self):
+        return reverse("Seller_detail", kwargs={"pk": self.pk})
