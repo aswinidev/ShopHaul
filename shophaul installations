@@ -1,3 +1,5 @@
 pip install django
 pip install mysqlclient
 pip install django-crispy-forms
+
+(Also setup myphpadmin in ubuntu as it is really convinient)
