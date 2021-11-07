@@ -38,3 +38,22 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class OldItem(models.Model):
+    oitem_id = models.AutoField(primary_key=True)
+    oname = models.CharField(max_length=40)
+    oquantity = models.PositiveIntegerField(default=0)
+    oprice = models.PositiveIntegerField(validators=[MinValueValidator(1)])
+    oaddress = models.CharField(max_length=150)
+    oseller = models.ForeignKey(
+        Seller, on_delete=models.CASCADE, related_name="oseller_items")
+
+    class Meta:
+        verbose_name = ("OldItem")
+        verbose_name_plural = ("OldItems")
+        ordering = ['oitem_id']
+        db_table = 'old_items'
+
+    def __str__(self):
+        return self.oname

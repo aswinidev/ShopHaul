@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Seller, Item
+from .models import Seller, Item, OldItem
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -63,6 +63,10 @@ def add_update_product(request):
             item.price = price
             item.quantity = quantity
             item.save()
+            oitem = OldItem.objects.create(
+                oname=name, oprice=price, oquantity=quantity, oaddress=address, oseller=current_seller
+            )
+            oitem.save()
         except Exception as exc:
             return JsonResponse({'status': str(exc)})
 
@@ -88,6 +92,11 @@ def add_product(request):
         item = Item.objects.create(
             name=name, price=price, quantity=quantity, address=address, seller=current_seller)
         item.save()
+        oitem = OldItem.objects.create(
+            oname=name, oprice=price, oquantity=quantity, oaddress=address, oseller=current_seller
+        )
+        oitem.save()
+        print("saved")
     except IntegrityError:
         return JsonResponse({'status': "An Item with Same Name Already Exists"})
     return JsonResponse({'status': 'Success'})
@@ -106,3 +115,15 @@ def delete_product(request):
     except Exception as exc:
         return JsonResponse({'status': str(exc)})
     return JsonResponse({'status': 'Success'})
+
+
+@login_required
+def previous_products(request):
+    current_seller = Seller.objects.get(user=request.user)
+    item_query = OldItem.objects.filter(oseller=current_seller)
+    print ("query")
+    items_json = item_query.values_list()
+    items_json = json.dumps(list(items_json), cls=DjangoJSONEncoder)
+    if item_query.count() > 0:
+        return render(request, 'shophaul/previous_products.html', {'items': item_query, 'itm': items_json})
+    return render(request, 'shophaul/previous_products.html', {'message': "No Product to show"})
