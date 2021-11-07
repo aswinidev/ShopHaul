@@ -20,3 +20,21 @@ class Seller(models.Model):
 
     def get_absolute_url(self):
         return reverse("Seller_detail", kwargs={"pk": self.pk})
+
+
+class Item(models.Model):
+    name = models.CharField(max_length=40, primary_key=True, unique=True)
+    quantity = models.PositiveIntegerField(default=0)
+    price = models.PositiveIntegerField(validators=[MinValueValidator(1)])
+    address = models.CharField(max_length=150)
+    seller = models.ForeignKey(
+        Seller, on_delete=models.CASCADE, related_name="seller_items")
+
+    class Meta:
+        verbose_name = ("Item")
+        verbose_name_plural = ("Items")
+        ordering = ['name', 'price']
+        db_table = 'item'
+
+    def __str__(self):
+        return self.name
