@@ -19,6 +19,14 @@ def products(request):
     return render(request, 'shophaul/products.html')
 
 
+def top_products(request):
+    return render(request, 'shophaul/top_products.html')
+
+
+def top_sellers(request):
+    return render(request, 'shophaul/top_sellers.html')
+
+
 @login_required
 def my_products(request):
     current_seller = Seller.objects.get(user=request.user)
@@ -83,10 +91,6 @@ def add_product(request):
     except IntegrityError:
         return JsonResponse({'status': "An Item with Same Name Already Exists"})
     return JsonResponse({'status': 'Success'})
-
-
-def top_products(request):
-    return render(request, 'shophaul/products.html')
 
 
 @csrf_exempt

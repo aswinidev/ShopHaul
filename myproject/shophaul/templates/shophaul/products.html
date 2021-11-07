@@ -8,7 +8,7 @@
     <div class="p-2">
         {% if request.user.is_authenticated %}
         <a href="{% url 'My Products'%}" class="btn btn-warning">My Products</a>
-        <a href="/products/add-update-product" class="btn btn-warning">Add/Update Products</a>
+        <a href="{% url 'Add/Update Product'%}" class="btn btn-warning">Add/Update Products</a>
         <a href="{% url 'Top Products'%}" class="btn btn-warning">Top Products</a>
         {% else %}
         <a href="{% url 'Top Products'%}" class="btn btn-warning">Top Products</a>
