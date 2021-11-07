@@ -19,8 +19,15 @@ def products(request):
     return render(request, 'shophaul/products.html')
 
 
+@login_required
 def my_products(request):
-    return render(request, 'shophaul/products.html')
+    current_seller = Seller.objects.get(user=request.user)
+    item_query = Item.objects.filter(seller=current_seller)
+    items_json = item_query.values_list()
+    items_json = json.dumps(list(items_json), cls=DjangoJSONEncoder)
+    if item_query.count() > 0:
+        return render(request, 'shophaul/myproducts.html', {'items': item_query, 'itm': items_json})
+    return render(request, 'shophaul/myproducts.html', {'message': "No Product to show"})
 
 
 @csrf_exempt
