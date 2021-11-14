@@ -19,6 +19,7 @@
         <li><a href="" class="link link-theme link-arrow">HOME</a></li>
         <li><a href="{% url 'products'%}" class="link link-theme link-arrow">PRODUCTS</a></li>
         {% if request.user.is_authenticated %}
+        <li><a href="{% url 'Previous Products'%}" class="link link-theme link-arrow">OLD PRODUCTS</a></li>
         <li><a href="{% url 'logout' %}"><button class="auth-btn-outline-dark">LOG OUT</button></a></li>
         {% else %}
         <li><a href="{% url 'login' %}"><button class="auth-btn-outline-dark">LOG IN</button></a></li>
