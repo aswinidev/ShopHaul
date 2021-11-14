@@ -1,25 +1,22 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}ShopHaul | Top Sellers{% endblock %}
+{% block title %}ShopHaul | Top Products{% endblock %}
 
 {% block content %}
 <div class="container pb-3">
-    <h2>Top Sellers</h2>
+    <h2>Top Products</h2>
     {% if items %}
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Seller</th>
-                <th>Total Revenue</th>
+                <th>Products</th>
             </tr>
         </thead>
         <tbody>
             {% for item in items %}
-            <tr id="{{ item.user }}">
-                <td> {{ item.user }} </td>
-                <td id="{{ item.user }} item.topprice"> {{ item.topprice }} </td>
-                </td>
+            <tr id="{{ item.name }}">
+                <td> {{ item.name }} </td>
             </tr>
             {% endfor %}
         </tbody>

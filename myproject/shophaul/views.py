@@ -20,11 +20,21 @@ def products(request):
 
 
 def top_products(request):
-    return render(request, 'shophaul/top_products.html')
+    item_query = Item.objects.all().order_by('-quantity')[:10]
+    items_json = item_query.values_list()
+    items_json = json.dumps(list(items_json), cls=DjangoJSONEncoder)
+    if item_query.count() > 0:
+        return render(request, 'shophaul/top_products.html', {'items': item_query, 'itm': items_json})
+    return render(request, 'shophaul/top_products.html', {'message': "No Products to show"})
 
 
-def top_sellers(request):
-    return render(request, 'shophaul/top_sellers.html')
+# def top_sellers(request):
+#     top = TopSellers.objects.all()
+#     top_json = top.values_list()
+#     top_json = json.dumps(list(top), cls=DjangoJSONEncoder)
+#     if top.count() > 0:
+#         return render(request, 'shophaul/top_sellers.html', {'items': top, 'itm': top_json})
+#     return render(request, 'shophaul/top_sellers.html', {'message': "No Sellers to show"})
 
 
 @login_required
@@ -43,6 +53,7 @@ def my_products(request):
 def add_update_product(request):
     current_seller = Seller.objects.get(user=request.user)
     item_query = Item.objects.filter(seller=current_seller)
+    # topseller_query = TopSellers.objects.filter(seller=current_seller)
     if request.method == "GET":
         items_json = item_query.values_list()
         items_json = json.dumps(list(items_json), cls=DjangoJSONEncoder)
@@ -58,7 +69,10 @@ def add_update_product(request):
         except Exception as exc:
             return JsonResponse({'status': str(exc)})
         try:
+
             item = Item.objects.get(name=name, seller=current_seller)
+            # old_price = item.price
+            # old_quantity = item.quantity
             item.address = address
             item.price = price
             item.quantity = quantity
@@ -67,6 +81,10 @@ def add_update_product(request):
                 oname=name, oprice=price, oquantity=quantity, oaddress=address, oseller=current_seller
             )
             oitem.save()
+            # top = TopSellers.objects.get(topseller=current_seller)
+            # top.topprice = top.topprice + \
+            #     (price*quantity) - (old_price*old_quantity)
+            # top.save()
         except Exception as exc:
             return JsonResponse({'status': str(exc)})
 
@@ -96,6 +114,11 @@ def add_product(request):
             oname=name, oprice=price, oquantity=quantity, oaddress=address, oseller=current_seller
         )
         oitem.save()
+        # top = TopSellers.objects.create(
+        #     topseller_name=current_seller.user, topprice=price*quantity,  top_seller=current_seller
+        # )
+        # top.save()
+
         print("saved")
     except IntegrityError:
         return JsonResponse({'status': "An Item with Same Name Already Exists"})
@@ -121,7 +144,6 @@ def delete_product(request):
 def previous_products(request):
     current_seller = Seller.objects.get(user=request.user)
     item_query = OldItem.objects.filter(oseller=current_seller)
-    print ("query")
     items_json = item_query.values_list()
     items_json = json.dumps(list(items_json), cls=DjangoJSONEncoder)
     if item_query.count() > 0:

@@ -1,24 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}ShopHaul | Top Sellers{% endblock %}
+{% block title %}ShopHaul | My Products{% endblock %}
 
 {% block content %}
 <div class="container pb-3">
-    <h2>Top Sellers</h2>
+    <h2>Products</h2>
     {% if items %}
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Address</th>
                 <th>Seller</th>
-                <th>Total Revenue</th>
             </tr>
         </thead>
         <tbody>
             {% for item in items %}
-            <tr id="{{ item.user }}">
-                <td> {{ item.user }} </td>
-                <td id="{{ item.user }} item.topprice"> {{ item.topprice }} </td>
+            <tr id="{{ item.name }}">
+                <td> {{ item.name }} </td>
+                <td id="{{ item.name }} quantity"> {{ item.quantity }} </td>
+                <td id="{{ item.name }} price"> {{ item.price }} </td>
+                <td id="{{ item.name }} address">{{ item.address }} </td>
                 </td>
             </tr>
             {% endfor %}
@@ -34,3 +39,4 @@
     {% endif %}
 </script>
 {% endblock content %}
+

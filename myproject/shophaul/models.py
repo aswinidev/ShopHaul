@@ -57,3 +57,16 @@ class OldItem(models.Model):
 
     def __str__(self):
         return self.oname
+
+
+# class TopSellers(models.Model):
+#     topseller_id = models.AutoField(primary_key=True)
+#     topseller_name = models.CharField(max_length=50)
+#     topprice = models.PositiveIntegerField(
+#         validators=[MinValueValidator(1)], default="0")
+#     topseller = models.ForeignKey(
+#         Seller, on_delete=models.CASCADE, related_name="topseller_items")
+
+#     class Meta:
+#         ordering = ['-topprice']
+#         db_table = 'top_sellers'

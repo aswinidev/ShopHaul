@@ -1,31 +1,107 @@
-{% extends 'base.html' %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %}Shopline{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopHaul
+    </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/dashboard.css' %}">
+</head>
+<body class="page-top">
 
-{% block content %}
-<div class="jumbotron">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6">
-                <h1 class="display-4">Vocal For Local!</h1>
-                <p class="lead">The Modern e-commerce For Small-Scale Businesses</p>
-                <hr class="my-4">
-                <div class="row mb-4 ml-1 text-center">
-                    {% if request.user.is_authenticated %}
-                    <a href="" class="ml-2 btn btn-primary">Proceed to Dashboard</a>
-                    {% else %}
-                    <a href="{% url 'register' %}" class="btn btn-warning">Register As Seller</a>
-                    <a href="{% url 'login' %}" class="ml-2 btn btn-primary">Login</a>
-                    {% endif %}
+    <nav class="header">
+      <a class="logo" href=".page-top" style="padding-left: 20px">ShopHaul</a>
+      <input class="menu-btn" type="checkbox" id="menu-btn" />
+      <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+      <ul class="menu">
+        <li><a href="" class="link link-theme link-arrow">HOME</a></li>
+        <li><a href="{% url 'products'%}" class="link link-theme link-arrow">PRODUCTS</a></li>
+        {% if request.user.is_authenticated %}
+        <li><a href="{% url 'logout' %}"><button class="auth-btn-outline-dark">LOG OUT</button></a></li>
+        {% else %}
+        <li><a href="{% url 'login' %}"><button class="auth-btn-outline-dark">LOG IN</button></a></li>
+        <li><a href="{% url 'register' %}"><button class="auth-btn-outline-dark">SIGN UP</button></a></li>
+        {% endif %}
+      </ul>
+    </nav>
+
+    <!-- Full Page Image Background Carousel Header -->
+  <div id="myCarousel" class="carousel slide">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for Slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <!-- Set the first background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('https://lh5.googleusercontent.com/yeaQp_D3uqU-kxC3-4fhKZgcuEksz9BnvlIIjI0VZ3noil2ZVKBDTSQp3WGHzUwpXMbfP2FR7SxvVlxUyDqAlOMsblA5VaKvLnstoMAN1JD05hcBZW3d6iRT49bq8tm2spelQecP=s0');"></div>
+                <div class="carousel-caption">
+                     <h2 class="animated fadeInLeft" style="font-size: 60px;">Welcome to ShopHaul</h2>
+                     <p class="animated fadeInUp" style="text-align: center">Designed for Small scale Sellers</p>
+                     <p class="animated fadeInUp" style="text-align: center"><a href="#" class="btn btn-transparent btn-rounded btn-large">Learn More</a></p>
                 </div>
             </div>
-
-            <div class="col-sm-6 text-center">
-                <img class="img-fluid" style="max-height: 250px;" src="{% static "images/index_jumbotron.png" %}"
-                    alt="My image">
+            <div class="item">
+                <!-- Set the second background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('https://www.selluseller.com/assets/blog-hero/blog1-hero-img.png');"></div>
+                <div class="carousel-caption">
+                     <h2 class="animated fadeInDown" style="font-size: 60px;">Sell your products Online</h2>
+                     <p class="animated fadeInUp" style="text-align: center">Market your products online and keep track of sales</p>
+                     <p class="animated fadeInUp" style="text-align: center"><a href="#" class="btn btn-transparent btn-rounded btn-large">Learn More</a></p>
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the third background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('https://www.repricerexpress.com/wp-content/uploads/2014/06/marketing-for-online-sellers.png');"></div>
+                <div class="carousel-caption">
+                     <h2 class="animated fadeInRight" style="font-size: 60px;">See your competition</h2>
+                     <p class="animated fadeInRight" style="text-align: center">Watch how other sellers are performing compared to you</p>
+                     <p class="animated fadeInRight" style="text-align: center"><a href="#" class="btn btn-transparent btn-rounded btn-large">Learn More</a></p>
+                </div>
             </div>
         </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="icon-next"></span>
+        </a>
+
     </div>
-</div>
-{% endblock %}
+    
+    <div id="main" class="main">
+      <footer class="footer">
+
+        <div class="container">
+          <hr>
+          <article class="foot-content-left">
+            <ul>&copy;2021 by ShopHaul</ul>
+          </article>
+
+          <article class="foot-content">
+            <ul>
+              <li><a href="shophaul@shophaul.com">shophaul@shophaul.com</a></li>
+              <li class="social"><a href="https://www.facebook.com/">Facebook</a></li>
+              <li class="social"><a href="https://twitter.com/">Twitter</a></li>
+              <li class="social"><a href="https://www.linkedin.com/company/">LinkedIn</a></li>
+            </ul>
+          </article>
+
+        </div>
+
+      </footer>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

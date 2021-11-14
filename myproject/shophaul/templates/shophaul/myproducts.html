@@ -1,42 +1,84 @@
-{% extends 'base.html' %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-{% block title %}ShopHaul | My Products{% endblock %}
-
-{% block content %}
-<div class="container pb-3">
-    <h2>Products</h2>
-    {% if items %}
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Address</th>
-                <th>Seller</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in items %}
-            <tr id="{{ item.name }}">
-                <td> {{ item.name }} </td>
-                <td id="{{ item.name }} quantity"> {{ item.quantity }} </td>
-                <td id="{{ item.name }} price"> {{ item.price }} </td>
-                <td id="{{ item.name }} address">{{ item.address }} </td>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p>{{ message }}</p>
-    {% endif %}
+  {% comment %} <h1 style="font-size:60px; color:black; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;">PRODUCTS PAGE</h1> {% endcomment %}
+  <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/myproducts.css' %}">
+</head>
+<body style="background-color: rgb(27,27,27);">
+<nav class="header">
+      <a class="logo" href="{% url 'index'%}" style="padding-left: 20px">ShopHaul</a>
+      <input class="menu-btn" type="checkbox" id="menu-btn" />
+      <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+      <ul class="menu">
+        <li><a href="{% url 'index'%}" class="link link-theme link-arrow">HOME</a></li>
+        <li><a href="{% url 'products'%}" class="link link-theme link-arrow">PRODUCTS</a></li>
+        {% if request.user.is_authenticated %}
+        <li><a href="{% url 'logout' %}"><button class="auth-btn-outline-dark">LOG OUT</button></a></li>
+        {% else %}
+        <li><a href="{% url 'login' %}"><button class="auth-btn-outline-dark">LOG IN</button></a></li>
+        <li><a href="{% url 'register' %}"><button class="auth-btn-outline-dark">SIGN UP</button></a></li>
+        {% endif %}
+      </ul>
+</nav>
+<div class="top-table" style="padding-top:150px;height:100%;">
+<div style="font-size:30px;color:#fff;padding-left:200px;padding-bottom:20px">My Products
 </div>
-<script>
+<table class="table-fill">
+<thead>
+<tr>
+<th class="text-left">Product</th>
+<th class="text-left">Quantity</th>
+<th class="text-left">Price</th>
+<th class="text-left">Address</th>
+</tr>
+</thead>
+{% if items %}
+<tbody class="table-hover">
+{% for item in items %}
+<tr id="{{ item.name }}">
+<td class="text-left">{{ item.name }}</td>
+<td id="{{ item.name }} quantity" class="text-left"> {{ item.quantity }} </td>
+<td id="{{ item.name }} price" class="text-left"> {{ item.price }} </td>
+<td id="{{ item.name }} address" class="text-left">{{ item.address }} </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% else %}
+<p>{{ message }}</p>
+{% endif %}
+</div>
+<div id="main" class="main">
+      <footer class="footer">
+
+        <div class="container">
+          <hr>
+          <article class="foot-content-left">
+            <ul>&copy;2021 by ShopHaul</ul>
+          </article>
+
+          <article class="foot-content">
+            <ul>
+              <li><a href="shophaul@shophaul.com">shophaul@shophaul.com</a></li>
+              <li class="social"><a href="https://www.facebook.com/">Facebook</a></li>
+              <li class="social"><a href="https://twitter.com/">Twitter</a></li>
+              <li class="social"><a href="https://www.linkedin.com/company/">LinkedIn</a></li>
+            </ul>
+          </article>
+
+        </div>
+
+      </footer>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
     {% if itm %}
     let items = {{ itm | safe }};
     {% endif %}
 </script>
-{% endblock content %}
-
+</body>
+</html>
